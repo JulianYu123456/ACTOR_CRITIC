@@ -32,7 +32,7 @@ class BaseAgent:
         self.noise = noise
         self.last_eval = 0
         self.best_return = -np.inf
-        self.eval_period = 50
+        self.eval_period = eval_period
         self.writer = None
         self.epsilon = 1e-12
         self.logdir_root = logdir_root
@@ -163,7 +163,7 @@ class BaseAgent:
                 self.best_return = ep_returns[-1]
                 if self.gif_to_board:
                     video = frames.reshape((1, )+frames.shape)
-                    gif_name =  str(self.episode) + '_' + self.logdir.replace('logs/', '').replace('/','_') 
+                    gif_name =  self.logdir.replace('logs/', '').replace('/','_') + '_' + str(self.episode) + '_' + str(int(self.best_return*100)/100) 
                     self.writer.add_video(gif_name, np.rollaxis(video, 4, 2), fps=self.fps)
                 
                 
